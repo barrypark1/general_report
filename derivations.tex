@@ -1,3 +1,38 @@
 \chapter{Data Fusion} \label{Chapter: Derivations}
 
 \section{Hard Soft Data fusion}
+
+\newcommand{\CP}[2]{\ensuremath{p(#1|#2)}} %%Conditional Prob
+
+\newcommand{\tstamp}{\ensuremath{k}}
+\newcommand{\state}{\ensuremath{X}}
+\newcommand{\stateTime}{\ensuremath{\state_{\tstamp}}}
+\newcommand{\stateTimePri}{\ensuremath{\state_{\tstamp-1}}}
+
+\newcommand{\hard}{\ensuremath{H}}
+\newcommand{\hardTime}{\ensuremath{\hard_\tstamp}}
+\newcommand{\hardRange}[2]{\ensuremath{\hard_{#1:#2}}}
+\newcommand{\hardUpToPri}{\ensuremath{\hardRange{1}{\tstamp-1}}}
+\newcommand{\hardUpToTime}{\ensuremath{\hardRange{1}{\tstamp}}}
+
+\newcommand{\soft}{\ensuremath{S}}
+\newcommand{\softTime}{\ensuremath{\soft_\tstamp}}
+\newcommand{\softRange}[2]{\ensuremath{\soft_{#1:#2}}}
+\newcommand{\softUpToPri}{\ensuremath{\softRange{1}{\tstamp-1}}}
+\newcommand{\softUpToTime}{\ensuremath{\softRange{1}{\tstamp}}}
+
+Chapman-Kolmogrov:
+\begin{equation}
+\CP{\stateTime}{\hardUpToPri,\softUpToPri}= \int \CP{\stateTime}{\stateTimePri}\CP{\stateTimePri}{\hardUpToPri,\softUpToPri} d\stateTimePri
+\end{equation}
+
+Hard Update:
+\begin{equation}
+\CP{\stateTime}{\hardUpToTime,\softUpToPri}=\frac{\CP{\hardUpToTime}{\stateTime}\CP{\stateTime}{\softUpToPri}}{\int \CP{\hardUpToTime}{\stateTime}\CP{\stateTime}{\hardUpToPri,\softUpToPri}d\stateTime}
+\end{equation}
+
+Soft Update:
+\begin{equation}
+\CP{\stateTime}{\hardUpToTime,\softUpToTime}= \frac{\CP{\softUpToTime}{\stateTime}\CP{\stateTime}{\hardUpToTime, \softUpToPri}}{\int \CP{\hardUpToTime}{\stateTime}\CP{\hardUpToTime}{\softUpToTime}d\stateTime}
+\end{equation}
+
