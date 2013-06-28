@@ -2,13 +2,17 @@
 
 \section{Summaries}
 
-One difficulty I have found with analysing the results, is how to summarise the results of data fusion. Upon completion of the data fusion using a certain number of crowdsourced reports, we arrive at a posterior distribution. This distribution tells us the probability of the circle being found within a certain region. 
+One difficulty I have found with analysing the results, is how to summarise the results of data fusion. 
+Upon completion of the data fusion using a certain number of crowdsourced reports, we arrive at a posterior distribution. 
+This distribution tells us the probability of the circle being found within a certain region. 
 
-There are two difficulties. The first is how to summarise a single posterior distribution, as often the distribution is non-symmetric. 
+There are two difficulties. 
+The first is how to summarise a single posterior distribution, as often the distribution is non-symmetric. 
 
 \subsection{Expectation Values}
 
-For some function \funcx, under a probability distribution \probx, then the average value of \funcx is called the Expectation Value, written as \expectation{\funcx}. For a discrete distribution, the expectation is given by
+For some function \funcx, under a probability distribution \probx, then the average value of \funcx is called the Expectation Value, written as \expectation{\funcx}. 
+For a discrete distribution, the expectation is given by
 
 \begin{equation}\label{Equation: discrete_expectation}
 \expectation{\funcx}=\sum\limits_x p(x)f(x)
@@ -41,7 +45,8 @@ The expectation value of a function can be viewed as a weighted average.
 
 \subsection{Point Estimates from Posterior Distributions}
 
-Point estiamtes are useful for reporting a single summary value of the distribution. Probably the most common is to take the expected value of the distribution, as shown in \fref{Figure: Means} which gives us the mean value of the parameter that distribution describes. 
+Point estiamtes are useful for reporting a single summary value of the distribution. 
+Probably the most common is to take the expected value of the distribution, as shown in \fref{Figure: Means} which gives us the mean value of the parameter that distribution describes. 
 
 Another common point estimate is the Maximum A-Posteriori of the distribution, which corresponds to a mode of the distribution.
 
@@ -61,7 +66,9 @@ var[f]=\mathbb{E}[f(x)^2]-\mathbb{E}[f(x)]^2
 \]
 
 
-For a posterior distribution, another standard measure of the spread around the mean of the distribution is the use of Bayesian confidence intervals, also known as credible intervals. A credible interval defines a region of a distribution where there is a defined probability that the true parameter being estimated lies within.  For example, if the probability that a variable $x$ lies between $0.1$ and $0.9$ is $0.95$, then $0.1 \leq  x \leq 0.9$ is a $95\% $ confidence interval
+For a posterior distribution, another standard measure of the spread around the mean of the distribution is the use of Bayesian confidence intervals, also known as credible intervals. 
+A credible interval defines a region of a distribution where there is a defined probability that the true parameter being estimated lies within. 
+For example, if the probability that a variable $x$ lies between $0.1$ and $0.9$ is $0.95$, then $0.1 \leq  x \leq 0.9$ is a $95\% $ confidence interval
 
 More formally, we can define a credible interval of a probability distribution $p(x)$ as
 
@@ -69,7 +76,11 @@ More formally, we can define a credible interval of a probability distribution $
 \int\limits_L^U p(x)=1-\alpha
 \]
 
-where $U$ is the upper credible bound, $L$ is the lower credible bound, and $\alpha$ sets the value of the credible interval. Credible intervals in more than 1 dimension are called credible regions. Credible regions are. invariant under reparametrization. A common credible interval is to centre the interval on the posterior mean. If we select the credible interval with minimum size, this region is called the highest probability density (HPD) region. HPDs are not invariant under reparametrization, but an HPD will always be a credible interval afterwards. 
+where $U$ is the upper credible bound, $L$ is the lower credible bound, and $\alpha$ sets the value of the credible interval. 
+Credible intervals in more than 1 dimension are called credible regions. 
+Credible regions are invariant under reparametrization A common credible interval is to centre the interval on the posterior mean. 
+If we select the credible interval with minimum size, this region is called the highest probability density (HPD) region. 
+HPDs are not invariant under reparametrization, but an HPD will always be a credible interval afterwards. 
 
 Calculating the HPD of ran arbitrary distribution can be computationally challenging, and is often achieved through sampling the distribution
 
@@ -77,13 +88,15 @@ Calculating the HPD of ran arbitrary distribution can be computationally challen
 
 \section{Sampling Distributions}
 
-In most real applications, it is difficult to analytically integrate a distribution, as a closed form solution may not exist. We therefore have to resort to numerical integration. 
+In most real applications, it is difficult to analytically integrate a distribution, as a closed form solution may not exist. 
+We therefore have to resort to numerical integration. 
 
 A relatively simple brute force approach is to evaluate the distribution at a series of evenly spaced points, and then interpolate between these using easy to integrate polynomials. 
 
 These methods can give accurate approximations of the integral when the spacing between points is small, but as the state space increases, the function evaluations grow exponentially.
 
-A second approach to approximating an integral is the use of Monte Carlo (MC) sampling,or Monte Carlo integration. This family of methods estimates the distribution by sampling under a specific probability distribution, then using these samples to estimate the function. 
+A second approach to approximating an integral is the use of Monte Carlo (MC) sampling,or Monte Carlo integration. 
+This family of methods estimates the distribution by sampling under a specific probability distribution, then using these samples to estimate the function. 
 
 
 
@@ -95,29 +108,45 @@ Imagine the scenario where we have a function $f(x)$ which we wish to normalise 
 \int\limits_a^b{\funcx}=1 
 \end{equation}
 
-This is a very common operation as the integral of a valid probability distribution must equal 1. To achieve this we can calculate 
+This is a very common operation as the integral of a valid probability distribution must equal 1. 
+To achieve this we can calculate 
 
 \begin{equation}\label{Equation: divide_by_integral} 
 \probx=\dfrac{\funcx } {\int _{a}^{b}\funcx} dx
 \end{equation}
 
-However, we may not be able to directly calculate the integral in \eqref{Equation: integrate_to_one}. In this case it may be possible to use Monte Carlo integration
+However, we may not be able to directly calculate the integral in \eqref{Equation: integrate_to_one}. 
+In this case it may be possible to use Monte Carlo integration
 
-As a brief introduction to sampling methods, let's look at two approaches. The first will generate samples from a uniform distribution, the second will draw samples directly from a gaussian probability distribution. 
+As a brief introduction to sampling methods, let's look at two approaches. 
+The first will generate samples from a uniform distribution, the second will draw samples directly from a gaussian probability distribution. 
 
-Let \funcx=x, which we wish to calculate the expectation value of x under a normal probability density p(x) with $\mu=0$ and $\sigma=1$. Also assume that we cannot calculate this expectation analytically, so we resort to sampling. One method of sampling would be to draw points from a uniform distribution, and then calculate the value of \eqref{Equation: discrete_expectation} using these samples. An alternative approach would be to sample the probability distribution \probx and use these samples to calculate \eqref{Equation: discrete_sample_expectation}. 
+Let \funcx=x, which we wish to calculate the expectation value of x under a normal probability density p(x) with $\mu=0$ and $\sigma=1$. 
+Also assume that we cannot calculate this expectation analytically, so we resort to sampling. 
+One method of sampling would be to draw points from a uniform distribution, and then calculate the value of \eqref{Equation: discrete_expectation} using these samples. 
+An alternative approach would be to sample the probability distribution \probx and use these samples to calculate \eqref{Equation: discrete_sample_expectation}. 
 
-We can see in FIGURE that for a typical set of samples, the expectation value using the samples drawn from \probx gives a robust estimate o the true expectation value, with little change in variance of the estimator with increasing state size. Drawing from the uniform distribution showed an increase in estimator variance with increased state size.
+We can see in FIGURE that for a typical set of samples, the expectation value using the samples drawn from \probx gives a robust estimate o the true expectation value, with little change in variance of the estimator with increasing state size. 
+Drawing from the uniform distribution showed an increase in estimator variance with increased state size.
 
-Here we had the option of drawing samples directly from \probx. Often this is not the case, and we cannot draw samples directly from this distribution. In cases like this, we could generate samples from a distribution that is easier to sample, then make some sort of adjustment to take in to account that we are not sampling directly from \probx. 
+Here we had the option of drawing samples directly from \probx. 
+Often this is not the case, and we cannot draw samples directly from this distribution. 
+In cases like this, we could generate samples from a distribution that is easier to sample, then make some sort of adjustment to take in to account that we are not sampling directly from \probx. 
 
-It is not always best to draw samples from \probx - we can at times out perform samples drawn from this distribution. Imagine the case where \funcx is low where \probx is high, but \funcx has large values elsewhere. This would mean that our true expectation value is heavily influenced by high value, but low probability states of x. For example, a stock portfolio might be thought to return \pounds 1 99.9\% of the time, but return -\pounds 1Million 0.1\% of the time. Despite having a low probability, this negative return clearly outweighs any benefits that we can achieve. However, if we were to sample \probx, and calculate our expectation, or expected return, from a finite number of samples, we may not actually get any samples from this low probability region, and therefore get a poor estimate of the expectation. We therefore wish to draw samples from the most important regions of the product \funcx\probx.
+It is not always best to draw samples from \probx - we can at times out perform samples drawn from this distribution. 
+Imagine the case where \funcx is low where \probx is high, but \funcx has large values elsewhere. 
+This would mean that our true expectation value is heavily influenced by high value, but low probability states of x. 
+For example, a stock portfolio might be thought to return \pounds 1 99.9\% of the time, but return -\pounds 1Million 0.1\% of the time. 
+Despite having a low probability, this negative return clearly outweighs any benefits that we can achieve. 
+However, if we were to sample \probx, and calculate our expectation, or expected return, from a finite number of samples, we may not actually get any samples from this low probability region, and therefore get a poor estimate of the expectation. 
+We therefore wish to draw samples from the most important regions of the product \funcx\probx.
 
 One approach that is used for both these cases is importance sampling. Importance sampling lies at the core of particle filters.
 
 \subsection{Importance Sampling}
 
-Assume we have a probability density \probx, which is difficult to sample, over a function \funcx. We can define a proposal distribution \propx which we choose to be easy to sample. We can therefore write
+Assume we have a probability density \probx, which is difficult to sample, over a function \funcx.
+ We can define a proposal distribution \propx which we choose to be easy to sample. We can therefore write
 
 \begin{align}
 \expectation{\funcx} &= \int \funcx\probx dx \nonumber \\
@@ -130,7 +159,11 @@ If we generate $L$ samples \sample{l} which we draw from the proposal distributi
 \expectation{\funcx} \simeq \frac{1}{L} \sum_{l=1}^{L} \frac{p(\sample{l})}{q(\sample{l})}f(\sample{l})
 \end{equation}
 
-The quantity given by $\approxiw{l}=\frac{p(\sample{l})}{q(\sample{l})}$ is known as the importance weights. This weight compensates for drawing samples from the proposal density q(x), rather than the true probability density p(x). Often, we will not know the normalisation factor of the original distribution. We can correct for this by normalising our importance weights. The normalised weights are given by
+The quantity given by $\approxiw{l}=\frac{p(\sample{l})}{q(\sample{l})}$ is known as the importance weights. 
+This weight compensates for drawing samples from the proposal density q(x), rather than the true probability density p(x). 
+Often, we will not know the normalisation factor of the original distribution. 
+We can correct for this by normalising our importance weights. 
+The normalised weights are given by
 
 \begin{equation}
 \normiw{l}= \frac{\approxiw{l}}{\sum^{L}_{j=1} \approxiw{j}}
@@ -145,13 +178,21 @@ Clearly, if we wish to get a good estimate of the expectation value \expectation
 
 \section{Data fusion}
 
-Data fusion is the process of combining data from difference sources in to meaningful state estimates. There are a number of different approaches to this, including Bayesian Probability Theory, Dempster-Shafer approaches, and fuzzy logic. The approach outlined here is based on the Bayesian approach.
+Data fusion is the process of combining data from difference sources in to meaningful state estimates. 
+There are a number of different approaches to this, including Bayesian Probability Theory, Dempster-Shafer approaches, and fuzzy logic. 
+The approach outlined here is based on the Bayesian approach.
 
 \subsection{Probability Theory}
 
-Bayesian probability theory views  probability as a measurement of uncertainty in the parameters of interest. Uncertainty is a measure of the degree of beleif we have in the state of the parameter. 
+Bayesian probability theory views  probability as a measurement of uncertainty in the parameters of interest. 
+Uncertainty is a measure of the degree of beleif we have in the state of the parameter. 
 
-Imagine the scenario where we have two types of coloured balls - red and blue - mixed together in two bags. We know that in bag 1, there are 70\% red, and 30\% blue, and in the second bag the mix is 50-50. If we were to place our hand in to bag 1 and pull a ball out at random, clearly there is a 70\% chance of it being red. Now imagine the case where we do not know which bag is which, and upon pulling a blue ball out of that bag, we wish to determine the probability of it being from bag 1 or bag 2. Clearly, we should have a greater belief that the ball is from bag 2. We can take this to a more extreme example where we now change the ratio of balls in bag 1 to 99\% red, and 1\% blue. In this case, we should be an even greater belief that the blue ball was drawn from bag 2. Bayesian probability theory gives us a way of measuring this belief in a robust manner. 
+Imagine the scenario where we have two types of coloured balls - red and blue - mixed together in two bags.
+ We know that in bag 1, there are 70\% red, and 30\% blue, and in the second bag the mix is 50-50. 
+ If we were to place our hand in to bag 1 and pull a ball out at random, clearly there is a 70\% chance of it being red. 
+ Now imagine the case where we do not know which bag is which, and upon pulling a blue ball out of that bag, we wish to determine the probability of it being from bag 1 or bag 2. 
+ Clearly, we should have a greater belief that the ball is from bag 2. We can take this to a more extreme example where we now change the ratio of balls in bag 1 to 99\% red, and 1\% blue. 
+ In this case, we should be an even greater belief that the blue ball was drawn from bag 2. Bayesian probability theory gives us a way of measuring this belief in a robust manner. 
 
 Let X be a random variable that represents the bags we can draw from. If the probability of choosing bag 1 is 0.4, then we could write
 
