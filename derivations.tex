@@ -6,6 +6,7 @@
 
 \newcommand{\tstamp}{\ensuremath{k}}
 \newcommand{\state}{\ensuremath{X}}
+\newcommand{\statei}{\ensuremath{x}}
 \newcommand{\stateTime}{\ensuremath{\state_{\tstamp}}}
 \newcommand{\stateTimePri}{\ensuremath{\state_{\tstamp-1}}}
 
@@ -21,6 +22,11 @@
 \newcommand{\softUpToPri}{\ensuremath{\softRange{1}{\tstamp-1}}}
 \newcommand{\softUpToTime}{\ensuremath{\softRange{1}{\tstamp}}}
 
+\newcommand{\smWeight}{\ensuremath{w}}
+\newcommand{\smCat}{\ensuremath{j}}
+\newcommand{\smBias}{\ensuremath{b}}
+\newcommand{\smNumCat}{\ensuremath{m}}
+
 Chapman-Kolmogrov:
 \begin{equation}
 \CP{\stateTime}{\hardUpToPri,\softUpToPri}= \int \CP{\stateTime}{\stateTimePri}\CP{\stateTimePri}{\hardUpToPri,\softUpToPri} d\stateTimePri
@@ -34,5 +40,10 @@ Hard Update:
 Soft Update:
 \begin{equation}
 \CP{\stateTime}{\hardUpToTime,\softUpToTime}= \frac{\CP{\softUpToTime}{\stateTime}\CP{\stateTime}{\hardUpToTime, \softUpToPri}}{\int \CP{\hardUpToTime}{\stateTime}\CP{\hardUpToTime}{\softUpToTime}d\stateTime}
+\end{equation}
+
+Softmax Likelihood
+\begin{equation}
+\CP{\softUpToTime}{\stateTime}=\frac{\exp(\smWeight_\smCat^T \statei +\smBias_\smCat)}{\sum^\smNumCat_h\exp(\smWeight_h^T\statei +\smBias_h)}
 \end{equation}
 
