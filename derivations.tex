@@ -34,12 +34,12 @@ Chapman-Kolmogrov:
 
 Hard Update:
 \begin{equation}
-\CP{\stateTime}{\hardUpToTime,\softUpToPri}=\frac{\CP{\hardUpToTime}{\stateTime}\CP{\stateTime}{\softUpToPri}}{\int \CP{\hardUpToTime}{\stateTime}\CP{\stateTime}{\hardUpToPri,\softUpToPri}d\stateTime}
+\CP{\stateTime}{\hardUpToTime,\softUpToPri}=\frac{\CP{\hardUpToTime}{\stateTime}\CP{\stateTime}{\hardUpToPri,\softUpToPri}}{\int \CP{\hardUpToTime}{\stateTime}\CP{\stateTime}{\hardUpToPri,\softUpToPri}d\stateTime}
 \end{equation}
 
 Soft Update:
 \begin{equation}
-\CP{\stateTime}{\hardUpToTime,\softUpToTime}= \frac{\CP{\softUpToTime}{\stateTime}\CP{\stateTime}{\hardUpToTime, \softUpToPri}}{\int \CP{\hardUpToTime}{\stateTime}\CP{\hardUpToTime}{\softUpToTime}d\stateTime}
+\CP{\stateTime}{\hardUpToTime,\softUpToTime}= \frac{\CP{\softUpToTime}{\stateTime}\CP{\stateTime}{\hardUpToTime, \softUpToPri}}{\int \CP{\softUpToTime}{\stateTime}\CP{\stateTime}{\hardUpToTime,\softUpToTime}d\stateTime}
 \end{equation}
 
 Softmax Likelihood
